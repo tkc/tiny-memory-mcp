@@ -1,0 +1,35 @@
+{
+  "name": "duck-mcp-simple",
+  "version": "0.1.0",
+  "module": "src/mcp-server.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun src/index.ts",
+    "start:mcp": "bun src/mcp-server.ts",
+    "dev": "bun --watch src/index.ts",
+    "dev:mcp": "bun --watch src/mcp-server.ts",
+    "build": "tsc",
+    "lint": "eslint \"**/*.ts\"",
+    "lint:fix": "eslint \"**/*.ts\" --fix",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "check": "bun run lint && tsc --noEmit",
+    "test": "bun test tests/unit",
+    "test:coverage": "bun test tests/unit --coverage"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "duckdb": "^1.2.0",
+    "hono": "^3.10.2",
+    "uuid": "^9.0.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@types/node": "^20.10.0",
+    "@types/uuid": "^9.0.7",
+    "eslint": "^8.57.0",
+    "prettier": "3.5.3",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.26.1"
+  }
+}
