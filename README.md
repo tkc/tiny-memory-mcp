@@ -1,18 +1,16 @@
-# Duck MCP (シンプル版)
+# tiny-memory-mcp
 
 DuckDBを使用して会話履歴を保存し、過去の会話を検索・参照できるMCP（Model Context Protocol）システム。シンプルな機能セットに焦点を当てています。
-
-[![CI](https://github.com/yourusername/duck-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/duck-mcp/actions/workflows/ci.yml)
-[![Code Quality](https://github.com/yourusername/duck-mcp/actions/workflows/code-quality.yml/badge.svg)](https://github.com/yourusername/duck-mcp/actions/workflows/code-quality.yml)
-[![Test Coverage](https://github.com/yourusername/duck-mcp/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/yourusername/duck-mcp/actions/workflows/test-coverage.yml)
 
 ## 主要機能
 
 - **全会話保存**
+
   - すべての会話がDuckDBに永続的に保存
   - 会話履歴を後から参照可能
 
 - **意味的検索**
+
   - ベクトル埋め込みを使った意味的な類似度検索
   - 単語の一致だけでなく文脈や意味から関連会話を検索
   - 「あのスレッドのあの会話」検索機能
@@ -177,7 +175,7 @@ const response = await fetch(
       query: "画像分類 CNN",
       contextWindowSize: 5, // 前後に取得するメッセージ数
     }),
-  },
+  }
 );
 
 const result = await response.json();
@@ -198,27 +196,27 @@ const mcpClient = new McpClient();
 await mcpClient.connect();
 
 // 会話を開始
-const startResult = await mcpClient.callTool('start_conversation', {
-  userId: 'user-123',
-  title: 'AI技術についての会話'
+const startResult = await mcpClient.callTool("start_conversation", {
+  userId: "user-123",
+  title: "AI技術についての会話",
 });
 const { conversationId } = JSON.parse(startResult.content[0].text);
 
 // ユーザーメッセージを追加
-await mcpClient.callTool('add_user_message', {
-  userId: 'user-123',
-  content: '大規模言語モデルについて教えてください'
+await mcpClient.callTool("add_user_message", {
+  userId: "user-123",
+  content: "大規模言語モデルについて教えてください",
 });
 
 // アシスタントメッセージを追加
-await mcpClient.callTool('add_assistant_message', {
-  userId: 'user-123',
-  content: '大規模言語モデル（LLM）は、...'
+await mcpClient.callTool("add_assistant_message", {
+  userId: "user-123",
+  content: "大規模言語モデル（LLM）は、...",
 });
 
 // 「あのスレッドのあの会話」を検索
-const searchResult = await mcpClient.callTool('search_reference', {
-  referenceText: '大規模言語モデル トランスフォーマー'
+const searchResult = await mcpClient.callTool("search_reference", {
+  referenceText: "大規模言語モデル トランスフォーマー",
 });
 ```
 
