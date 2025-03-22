@@ -1,7 +1,7 @@
 import { getDatabase } from "../index";
 
 /**
- * TODOテーブルを初期化する
+ * Initialize the TODO table
  */
 export function initTodosTable() {
   const db = getDatabase();

@@ -4,31 +4,31 @@ import { TodoCreateInput } from "../repositories/todoRepository";
 import { MemoryCreateInput } from "../repositories/memoryRepository";
 
 /**
- * 新しいTODOを作成し、作成した内容をメモリーとしても保存する
- * @param title TODOのタイトル
- * @param description TODOの説明
- * @param dueDate 期限
- * @returns 作成したTODOのID
+ * Create a new TODO and also save its creation as a memory
+ * @param title TODO title
+ * @param description TODO description
+ * @param dueDate Due date
+ * @returns The ID of the created TODO
  */
 export function createTodoWithMemory(
   title: string,
   description?: string,
   dueDate?: Date,
 ) {
-  // TODO作成用データを準備
+  // Prepare data for TODO creation
   const todoInput: TodoCreateInput = {
     title,
     description,
     due_date: dueDate,
   };
 
-  // リポジトリを使用してTODOを作成
+  // Create TODO using repository
   const todoId = todoRepo.createTodo(todoInput);
 
-  // メモリーにも記録
-  const dueDateStr = dueDate ? ` (期限: ${dueDate.toLocaleDateString()})` : "";
+  // Record to memory
+  const dueDateStr = dueDate ? ` (Due: ${dueDate.toLocaleDateString()})` : "";
   const memoryInput: MemoryCreateInput = {
-    content: `TODOを作成しました: ${title}${dueDateStr}`,
+    content: `Created TODO: ${title}${dueDateStr}`,
   };
 
   memoryRepo.createMemory(memoryInput);
@@ -37,25 +37,25 @@ export function createTodoWithMemory(
 }
 
 /**
- * TODOを完了としてマークし、メモリーにも記録する
- * @param id TODOのID
- * @returns 更新に成功したかどうか
+ * Mark a TODO as completed and record it in memory
+ * @param id TODO ID
+ * @returns Whether the update was successful
  */
 export function completeTodoWithMemory(id: number) {
-  // リポジトリを使用してTODOのステータスを更新
+  // Update TODO status using repository
   const success = todoRepo.updateTodoStatus(id, true);
 
   if (success) {
-    // 対象のTODOの情報を取得
+    // Get information about the target TODO
     const todo = todoRepo.getTodoById(id);
 
     if (todo) {
-      // メモリー入力用データを準備
+      // Prepare data for memory entry
       const memoryInput: MemoryCreateInput = {
-        content: `TODOを完了しました: ${todo.title}`,
+        content: `Completed TODO: ${todo.title}`,
       };
 
-      // リポジトリを使用してメモリーを作成
+      // Create memory using repository
       memoryRepo.createMemory(memoryInput);
     }
   }
@@ -64,25 +64,25 @@ export function completeTodoWithMemory(id: number) {
 }
 
 /**
- * TODOを未完了状態に戻し、メモリーにも記録する
- * @param id TODOのID
- * @returns 更新に成功したかどうか
+ * Mark a TODO as incomplete and record it in memory
+ * @param id TODO ID
+ * @returns Whether the update was successful
  */
 export function uncompleteTodoWithMemory(id: number) {
-  // リポジトリを使用してTODOのステータスを更新
+  // Update TODO status using repository
   const success = todoRepo.updateTodoStatus(id, false);
 
   if (success) {
-    // 対象のTODOの情報を取得
+    // Get information about the target TODO
     const todo = todoRepo.getTodoById(id);
 
     if (todo) {
-      // メモリー入力用データを準備
+      // Prepare data for memory entry
       const memoryInput: MemoryCreateInput = {
-        content: `TODOを未完了に戻しました: ${todo.title}`,
+        content: `Marked TODO as incomplete: ${todo.title}`,
       };
 
-      // リポジトリを使用してメモリーを作成
+      // Create memory using repository
       memoryRepo.createMemory(memoryInput);
     }
   }
@@ -91,25 +91,25 @@ export function uncompleteTodoWithMemory(id: number) {
 }
 
 /**
- * 未完了のTODOをすべて取得する
- * @returns 未完了のTODOリスト
+ * Get all incomplete TODOs
+ * @returns List of incomplete TODOs
  */
 export function getAllIncompleteTodos() {
   return todoRepo.searchTodos({ completed: false });
 }
 
 /**
- * 完了済みのTODOをすべて取得する
- * @returns 完了済みのTODOリスト
+ * Get all completed TODOs
+ * @returns List of completed TODOs
  */
 export function getAllCompletedTodos() {
   return todoRepo.searchTodos({ completed: true });
 }
 
 /**
- * 期限切れ間近のTODOを取得する
- * @param days 期限切れまでの日数
- * @returns 期限切れ間近のTODOリスト
+ * Get TODOs that are due soon
+ * @param days Number of days until due
+ * @returns List of upcoming TODOs
  */
 export function getUpcomingTodos(days: number = 3) {
   const today = new Date();
@@ -124,8 +124,8 @@ export function getUpcomingTodos(days: number = 3) {
 }
 
 /**
- * 期限切れのTODOを取得する
- * @returns 期限切れのTODOリスト
+ * Get overdue TODOs
+ * @returns List of overdue TODOs
  */
 export function getOverdueTodos() {
   const today = new Date();
@@ -137,24 +137,24 @@ export function getOverdueTodos() {
 }
 
 /**
- * TODOを削除し、削除操作をメモリーに記録する
- * @param id 削除するTODOのID
- * @returns 削除に成功したかどうか
+ * Delete a TODO and record the deletion in memory
+ * @param id ID of the TODO to delete
+ * @returns Whether the deletion was successful
  */
 export function deleteTodoWithMemory(id: number) {
-  // 削除前にTODO情報を取得
+  // Get TODO information before deletion
   const todo = todoRepo.getTodoById(id);
 
-  // リポジトリを使用してTODOを削除
+  // Delete TODO using repository
   const success = todoRepo.deleteTodo(id);
 
   if (success && todo) {
-    // メモリー入力用データを準備
+    // Prepare data for memory entry
     const memoryInput: MemoryCreateInput = {
-      content: `TODOを削除しました: ${todo.title}`,
+      content: `Deleted TODO: ${todo.title}`,
     };
 
-    // リポジトリを使用してメモリーを作成
+    // Create memory using repository
     memoryRepo.createMemory(memoryInput);
   }
 

@@ -17,7 +17,7 @@ export interface MemoriesAroundId {
 }
 
 /**
- * メモリーを作成する
+ * Create a memory
  */
 export function createMemory(memory: MemoryCreateInput): number {
   const db = getDatabase();
@@ -28,7 +28,7 @@ export function createMemory(memory: MemoryCreateInput): number {
 }
 
 /**
- * メモリーをIDで取得する
+ * Get memory by ID
  */
 export function getMemoryById(id: number): Memory | null {
   const db = getDatabase();
@@ -38,7 +38,7 @@ export function getMemoryById(id: number): Memory | null {
 }
 
 /**
- * 全てのメモリーを取得する
+ * Get all memories
  */
 export function getAllMemories(): Memory[] {
   const db = getDatabase();
@@ -48,7 +48,7 @@ export function getAllMemories(): Memory[] {
 }
 
 /**
- * テキスト検索でメモリーを検索する
+ * Search memories by text
  */
 export function searchMemories(searchText: string): Memory[] {
   const db = getDatabase();
@@ -59,7 +59,7 @@ export function searchMemories(searchText: string): Memory[] {
 }
 
 /**
- * 特定のIDを中心に前後のメモリーを取得する
+ * Get memories around a specific ID
  */
 export function getMemoriesAroundId(
   id: number,
@@ -67,7 +67,7 @@ export function getMemoriesAroundId(
 ): MemoriesAroundId {
   const db = getDatabase();
 
-  // 指定されたIDのメモリーの作成日時を取得
+  // Get the creation timestamp of the specified memory
   const targetMemory = db
     .prepare("SELECT created_at FROM memories WHERE id = ?")
     .get(id);
@@ -76,7 +76,7 @@ export function getMemoriesAroundId(
     return { before: [], current: null, after: [] };
   }
 
-  // IDより前のメモリー（新しい順に最大range件）
+  // Memories before the ID (newer ones, maximum range entries)
   const before = db
     .prepare(
       `
@@ -88,12 +88,12 @@ export function getMemoriesAroundId(
     )
     .all(targetMemory.created_at, range) as Memory[];
 
-  // 指定されたIDのメモリー
+  // The memory with the specified ID
   const current = db
     .prepare("SELECT * FROM memories WHERE id = ?")
     .get(id) as Memory | null;
 
-  // IDより後のメモリー（古い順に最大range件）
+  // Memories after the ID (older ones, maximum range entries)
   const after = db
     .prepare(
       `
@@ -106,14 +106,14 @@ export function getMemoriesAroundId(
     .all(targetMemory.created_at, range) as Memory[];
 
   return {
-    before: before.reverse(), // 古い順に並べ替え
+    before: before.reverse(), // Sort by oldest first
     current,
     after,
   };
 }
 
 /**
- * 指定した日付範囲内のメモリーを取得する
+ * Get memories within a date range
  */
 export function getMemoriesByDateRange(
   startDate: Date,

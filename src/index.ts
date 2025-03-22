@@ -14,18 +14,32 @@ import * as memoryRepo from "./repositories/memoryRepository";
 import * as todoService from "./services/todoService";
 import * as memoryService from "./services/memoryService";
 
-// エクスポート
+// Process command line arguments
+const args = process.argv.slice(2);
+let dbPath = "tiny-memory.db"; // Default path
+
+// Display current directory and default path
+console.error(`[INFO] Current working directory: ${process.cwd()}`);
+console.error(`[INFO] Default database path: ${process.cwd()}/tiny-memory.db`);
+
+// Use the first argument as database path if provided
+if (args.length > 0) {
+  dbPath = args[0];
+  console.error(`[INFO] Setting database path: ${dbPath}`);
+}
+
+// Exports
 export {
   initializeDatabase,
   closeDatabase,
   todoRepo,
   memoryRepo,
   todoService,
-  memoryService
+  memoryService,
 };
 
 // Initialize database
-setupDatabase();
+setupDatabase(dbPath);
 initializeDatabase();
 
 // Logger utility
@@ -108,7 +122,7 @@ server.tool(
       const todoId = todoService.createTodoWithMemory(
         todoInput.title,
         todoInput.description,
-        todoInput.due_date
+        todoInput.due_date,
       );
 
       return {
@@ -132,7 +146,7 @@ server.tool(
         isError: true,
       };
     }
-  }
+  },
 );
 
 server.tool(
@@ -178,7 +192,7 @@ server.tool(
         isError: true,
       };
     }
-  }
+  },
 );
 
 server.tool(
@@ -222,7 +236,7 @@ server.tool(
         isError: true,
       };
     }
-  }
+  },
 );
 
 server.tool(
@@ -261,7 +275,7 @@ server.tool(
         isError: true,
       };
     }
-  }
+  },
 );
 
 server.tool(
@@ -294,7 +308,7 @@ server.tool(
         isError: true,
       };
     }
-  }
+  },
 );
 
 server.tool(
@@ -326,7 +340,7 @@ server.tool(
         isError: true,
       };
     }
-  }
+  },
 );
 
 // Memory tools
@@ -359,7 +373,7 @@ server.tool(
         isError: true,
       };
     }
-  }
+  },
 );
 
 server.tool(
@@ -391,7 +405,7 @@ server.tool(
         isError: true,
       };
     }
-  }
+  },
 );
 
 server.tool(
@@ -438,7 +452,7 @@ server.tool(
         isError: true,
       };
     }
-  }
+  },
 );
 
 server.tool(
@@ -471,7 +485,7 @@ server.tool(
         isError: true,
       };
     }
-  }
+  },
 );
 
 // Server start function
@@ -508,22 +522,16 @@ async function main() {
 // Process termination handler
 process.on("SIGINT", () => {
   log("info", "Server shutting down...");
-  closeDatabase();
   process.exit(0);
 });
 
 // Error handler
 process.on("uncaughtException", (error) => {
   log("error", "Uncaught exception:", error);
-  closeDatabase();
 });
 
-// Entry point
-// Run the server if executed directly
-if (import.meta.main) {
-  main().catch((error) => {
-    log("error", "Unexpected error:", error);
-    closeDatabase();
-    process.exit(1);
-  });
-}
+// Run the server
+main().catch((error) => {
+  log("error", "Unexpected error:", error);
+  process.exit(1);
+});

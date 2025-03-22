@@ -4,8 +4,8 @@ export interface Todo {
   id: number;
   title: string;
   description?: string;
-  due_date?: string; // ISO形式の日付文字列
-  completed: number; // SQLiteではboolean型がないので0/1で表現
+  due_date?: string; // Date string in ISO format
+  completed: number; // SQLite doesn't have boolean type, so use 0/1
   created_at: string;
 }
 
@@ -23,7 +23,7 @@ export interface TodoSearchOptions {
 }
 
 /**
- * TODOを作成する
+ * Create a TODO
  */
 export function createTodo(todo: TodoCreateInput): number {
   const db = getDatabase();
@@ -40,7 +40,7 @@ export function createTodo(todo: TodoCreateInput): number {
 }
 
 /**
- * TODO IDで取得する
+ * Get TODO by ID
  */
 export function getTodoById(id: number): Todo | null {
   const db = getDatabase();
@@ -48,7 +48,7 @@ export function getTodoById(id: number): Todo | null {
 }
 
 /**
- * 全てのTODOを取得する
+ * Get all TODOs
  */
 export function getAllTodos(): Todo[] {
   const db = getDatabase();
@@ -58,19 +58,19 @@ export function getAllTodos(): Todo[] {
 }
 
 /**
- * TODOを検索する
+ * Search TODOs
  */
 export function searchTodos(options: TodoSearchOptions = {}): Todo[] {
   let sql = "SELECT * FROM todos WHERE 1=1";
   const params: any[] = [];
 
-  // 完了状態でフィルタリング
+  // Filter by completion status
   if (options.completed !== undefined) {
     sql += " AND completed = ?";
     params.push(options.completed ? 1 : 0);
   }
 
-  // 期限でフィルタリング
+  // Filter by due date
   if (options.dueBefore) {
     sql += " AND due_date IS NOT NULL AND due_date <= ?";
     params.push(options.dueBefore.toISOString());
@@ -81,7 +81,7 @@ export function searchTodos(options: TodoSearchOptions = {}): Todo[] {
     params.push(options.dueAfter.toISOString());
   }
 
-  // テキスト検索
+  // Text search
   if (options.searchText) {
     sql += " AND (title LIKE ? OR description LIKE ?)";
     const searchParam = `%${options.searchText}%`;
@@ -96,7 +96,7 @@ export function searchTodos(options: TodoSearchOptions = {}): Todo[] {
 }
 
 /**
- * 完了状態を更新する
+ * Update completion status
  */
 export function updateTodoStatus(id: number, completed: boolean): boolean {
   const db = getDatabase();
@@ -107,7 +107,7 @@ export function updateTodoStatus(id: number, completed: boolean): boolean {
 }
 
 /**
- * TODOを削除する
+ * Delete a TODO
  */
 export function deleteTodo(id: number): boolean {
   const db = getDatabase();

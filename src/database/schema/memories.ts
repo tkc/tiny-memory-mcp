@@ -1,7 +1,7 @@
 import { getDatabase } from "../index";
 
 /**
- * Memoriesテーブルを初期化する
+ * Initialize the Memories table
  */
 export function initMemoriesTable() {
   const db = getDatabase();

@@ -2,45 +2,47 @@ import { Database } from "bun:sqlite";
 import { initTodosTable } from "./schema/todos";
 import { initMemoriesTable } from "./schema/memories";
 
-// データベース接続を作成（テスト用の場合は引数で指定されたパスを使用）
+// Create database connection (use specified path for testing)
 let db: Database;
 
 export function setupDatabase(dbPath: string = "tiny-memory.db") {
-  // 既存の接続があれば閉じる
+  // Close existing connection if any
   if (db) {
     try {
       db.close();
     } catch (e) {
-      // すでに閉じられている場合は無視
-      console.log(e);
+      // Ignore if already closed
+      console.error("Error while closing database connection:", e);
     }
   }
 
-  // 新しい接続を作成
-  db = new Database(dbPath);
-  return db;
-}
-
-// デフォルトのデータベース接続を初期化
-setupDatabase();
-
-// テーブル作成
-export function initializeDatabase() {
-  initTodosTable();
-  initMemoriesTable();
-
-  console.log("データベースの初期化が完了しました");
-}
-
-// データベースを閉じる関数
-export function closeDatabase() {
-  if (db) {
-    db.close();
-    console.log("データベース接続を閉じました");
+  try {
+    // Create new connection
+    db = new Database(dbPath);
+    return db;
+  } catch (error) {
+    console.error(`Database connection error: ${error}`);
+    console.log("Using in-memory database as fallback");
+    db = new Database(":memory:");
+    return db;
   }
 }
 
-// 現在のデータベース接続を取得する関数
+// Create tables
+export function initializeDatabase() {
+  initTodosTable();
+  initMemoriesTable();
+}
+
+// Function to close the database
+export function closeDatabase() {
+  if (db) {
+    db.close();
+    console.log("Database connection closed");
+  }
+}
+
+// Function to get the current database connection
 export function getDatabase() {
   return db;
 }
