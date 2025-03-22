@@ -6,7 +6,8 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   {
     rules: {
-      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-explicit-any": "off", // anyの使用を許可
+      "@typescript-eslint/no-empty-object-type": "off", // 空のオブジェクト型を許可
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/no-unused-vars": [
         "warn",
@@ -16,7 +17,7 @@ export default tseslint.config(
           caughtErrorsIgnorePattern: "^_",
         },
       ],
-      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "no-console": "off", // consoleの使用を完全に許可
     },
     ignores: ["node_modules/**", "dist/**", "build/**"],
   },
