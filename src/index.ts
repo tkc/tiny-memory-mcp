@@ -95,7 +95,7 @@ const server = new McpServer({
 // TODO tools
 server.tool(
   "create_todo",
-  "Creates a new TODO task with optional description and due date.",
+  "Creates a new TODO task in the system. You can specify a title (required), an optional description for more details, and an optional due date in ISO format (YYYY-MM-DD). The task will be automatically marked as incomplete upon creation. The created TODO will also be recorded in the memory system for future reference.",
   TodoCreateSchema.shape,
   async (args) => {
     try {
@@ -137,7 +137,7 @@ server.tool(
 
 server.tool(
   "update_todo_status",
-  "Updates the completion status of a TODO task.",
+  "Updates the completion status of an existing TODO task. Requires the task ID and the desired completion status (true for completed, false for incomplete). This action is recorded in the memory system, allowing you to track when tasks were completed or reopened. If the specified task doesn't exist, the operation will fail gracefully with a notification.",
   TodoUpdateSchema.shape,
   async (args) => {
     try {
@@ -183,7 +183,7 @@ server.tool(
 
 server.tool(
   "delete_todo",
-  "Deletes a TODO task by ID.",
+  "Permanently removes a TODO task from the system by its ID. This action cannot be undone. Before deletion, the task details are recorded in the memory system for historical purposes. If no task exists with the specified ID, the operation will return a notification that no matching task was found.",
   TodoDeleteSchema.shape,
   async (args) => {
     try {
@@ -227,7 +227,7 @@ server.tool(
 
 server.tool(
   "search_todos",
-  "Searches for TODOs based on various criteria.",
+  "Searches for TODO tasks based on various criteria. You can filter by completion status (true/false), due dates (before or after specified dates in ISO format), and search text that appears in the title or description. Multiple filters can be combined for more precise searches. Results are sorted with upcoming due dates first, followed by creation date.",
   TodoSearchSchema.shape,
   async (args) => {
     try {
@@ -266,7 +266,7 @@ server.tool(
 
 server.tool(
   "get_upcoming_todos",
-  "Gets upcoming TODOs that are due within a certain number of days.",
+  "Retrieves incomplete TODO tasks that are due within a specified number of days from today. The default period is 3 days if not specified. This function helps identify tasks that require immediate attention. Results include all task details such as title, description, due date, and creation timestamp.",
   z.object({ days: z.number().optional() }).shape,
   async (args) => {
     try {
@@ -299,7 +299,7 @@ server.tool(
 
 server.tool(
   "get_overdue_todos",
-  "Gets overdue TODOs.",
+  "Retrieves all incomplete TODO tasks with due dates that have already passed. These are tasks that require immediate attention as they are behind schedule. Results are sorted with the oldest overdue tasks first, allowing you to prioritize tasks that have been pending the longest.",
   z.object({}).shape,
   async () => {
     try {
@@ -332,7 +332,7 @@ server.tool(
 // Memory tools
 server.tool(
   "create_memory",
-  "Creates a new memory entry.",
+  "Stores a new text entry in the memory system with the current timestamp. Memories serve as a persistent record of actions, thoughts, and events. This function allows creating standalone memories, while other todo operations automatically create associated memories. Each memory entry is assigned a unique ID for future reference.",
   MemoryCreateSchema.shape,
   async (args) => {
     try {
@@ -364,7 +364,7 @@ server.tool(
 
 server.tool(
   "search_memories",
-  "Searches for memories containing specific text.",
+  "Searches through all stored memories for entries containing the specified text. The search is case-insensitive and matches partial text within the memory content. Results are returned in reverse chronological order (newest first) and include the full content and creation timestamp of each matching memory.",
   MemorySearchSchema.shape,
   async (args) => {
     try {
@@ -396,7 +396,7 @@ server.tool(
 
 server.tool(
   "get_memory_context",
-  "Gets the context around a specific memory (previous and next memories).",
+  "Retrieves a specific memory by ID along with surrounding memories (before and after) to provide context. You can specify how many surrounding memories to include (default is 5). The result is formatted as Markdown with clear sections for previous memories, the current memory, and subsequent memories, making it easy to understand the sequence of events.",
   MemoryAroundSchema.shape,
   async (args) => {
     try {
@@ -443,7 +443,7 @@ server.tool(
 
 server.tool(
   "get_memory_stats",
-  "Gets statistics about memories by date.",
+  "Generates statistics about memory creation activity over a specified time period (default is 30 days). Returns daily counts of memories created, allowing you to track usage patterns and activity levels over time. The statistics are returned as an array of date and count pairs, sorted chronologically from oldest to newest.",
   z.object({ days: z.number().optional() }).shape,
   async (args) => {
     try {
