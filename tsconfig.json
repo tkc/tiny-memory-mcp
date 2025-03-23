@@ -11,9 +11,12 @@
     "resolveJsonModule": true,
     "declaration": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "paths": {
+      "bun:sqlite": ["./node_modules/bun-types/sqlite.d.ts"]
+    }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "types/**/*"],
   "exclude": ["node_modules", "dist", "tests/**/*"],
   "lib": ["ESNext", "DOM", "DOM.Iterable"],
   "types": ["web", "bun-types"]

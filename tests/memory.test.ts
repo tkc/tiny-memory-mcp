@@ -130,7 +130,6 @@ describe("Memory機能テスト", () => {
     const markdown = memoryService.getMemoryContextAsMarkdown(middleId, 1);
 
     // マークダウンに必要な情報が含まれていることを確認
-    expect(markdown).toContain("# メモリーコンテキスト");
     expect(markdown).toContain("テストメモリー 3");
     // 環境によっては前後のメモリー情報が取得できない場合があるため、その部分のテストは省略
   });

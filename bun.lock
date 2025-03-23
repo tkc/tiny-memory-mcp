@@ -884,8 +884,6 @@
 
     "@smithy/util-stream/@smithy/util-hex-encoding": ["@smithy/util-hex-encoding@4.0.0", "", { "dependencies": { "tslib": "^2.6.2" } }, "sha512-Yk5mLhHtfIgW2W2WQZWSg5kuMZCVbvhFmC7rV4IO2QqnZdbEFPmQnCcGMAX2z/8Qj3B9hYYNjZOhWym+RwhePw=="],
 
-    "@types/ws/@types/node": ["@types/node@22.13.11", "", { "dependencies": { "undici-types": "~6.20.0" } }, "sha512-iEUCUJoU0i3VnrCmgoWCXttklWcvoCIx4jzcP22fioIVSdTmjgoEvmAO/QPw6TcS9k5FrNgn4w7q5lGOd1CT5g=="],
-
     "@typescript-eslint/typescript-estree/minimatch": ["minimatch@9.0.5", "", { "dependencies": { "brace-expansion": "^2.0.1" } }, "sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow=="],
 
     "@typescript-eslint/visitor-keys/eslint-visitor-keys": ["eslint-visitor-keys@4.2.0", "", {}, "sha512-UyLnSehNt62FFhSwjZlHmeokpRK59rcz29j+F1/aDgbkbRTk7wIc9XzdoasMUbRNKDM0qQt/+BJ4BrpFeABemw=="],
@@ -897,8 +895,6 @@
     "body-parser/iconv-lite": ["iconv-lite@0.5.2", "", { "dependencies": { "safer-buffer": ">= 2.1.2 < 3" } }, "sha512-kERHXvpSaB4aU3eANwidg79K8FlrN77m8G9V+0vOR3HYaRifrlwMEpT7ZBJqLSEIHnEgJTHcWK82wwLwwKwtag=="],
 
     "body-parser/qs": ["qs@6.14.0", "", { "dependencies": { "side-channel": "^1.1.0" } }, "sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w=="],
-
-    "bun-types/@types/node": ["@types/node@22.13.11", "", { "dependencies": { "undici-types": "~6.20.0" } }, "sha512-iEUCUJoU0i3VnrCmgoWCXttklWcvoCIx4jzcP22fioIVSdTmjgoEvmAO/QPw6TcS9k5FrNgn4w7q5lGOd1CT5g=="],
 
     "chromadb-default-embed/@huggingface/jinja": ["@huggingface/jinja@0.1.3", "", {}, "sha512-9KsiorsdIK8+7VmlamAT7Uh90zxAhC/SeKaKc80v58JhtPYuwaJpmR/ST7XAUxrHAFqHTCoTH5aJnJDwSL6xIQ=="],
 
@@ -1298,11 +1294,7 @@
 
     "@smithy/signature-v4/@smithy/util-utf8/@smithy/util-buffer-from": ["@smithy/util-buffer-from@1.1.0", "", { "dependencies": { "@smithy/is-array-buffer": "^1.1.0", "tslib": "^2.5.0" } }, "sha512-9m6NXE0ww+ra5HKHCHig20T+FAwxBAm7DIdwc/767uGWbRcY720ybgPacQNB96JMOI7xVr/CDa3oMzKmW4a+kw=="],
 
-    "@types/ws/@types/node/undici-types": ["undici-types@6.20.0", "", {}, "sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg=="],
-
     "@typescript-eslint/typescript-estree/minimatch/brace-expansion": ["brace-expansion@2.0.1", "", { "dependencies": { "balanced-match": "^1.0.0" } }, "sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA=="],
-
-    "bun-types/@types/node/undici-types": ["undici-types@6.20.0", "", {}, "sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg=="],
 
     "express/debug/ms": ["ms@2.1.2", "", {}, "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="],
 

@@ -86,7 +86,7 @@ export function getMemoriesAroundId(
     LIMIT ?
   `,
     )
-    .all(targetMemory.created_at, range) as Memory[];
+    .all((targetMemory as Memory).created_at, range) as Memory[];
 
   // The memory with the specified ID
   const current = db
@@ -103,7 +103,7 @@ export function getMemoriesAroundId(
     LIMIT ?
   `,
     )
-    .all(targetMemory.created_at, range) as Memory[];
+    .all((targetMemory as Memory).created_at, range) as Memory[];
 
   return {
     before: before.reverse(), // Sort by oldest first
